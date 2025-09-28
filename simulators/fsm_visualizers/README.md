@@ -16,7 +16,7 @@ This creates `simulators/FSM_Simulators-py/` with `_dafny.py` and generated modu
 
 ## Install and Run
 ```bash
-cd simulators/visualizer
+cd simulators/fsm_visualizers
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 streamlit run app.py
