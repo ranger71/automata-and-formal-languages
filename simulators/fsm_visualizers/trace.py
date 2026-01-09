@@ -155,8 +155,8 @@ def build_ndfsm_graph(M: Any) -> Tuple[Set[int], Dict[Tuple[int, int], Set[str]]
 # ----------------------
 
 def get_dfsm_machine() -> Any:
-    # From generated FSM__SIMULATION: DFSM machine named M__16
-    return FSM_SIM.default__.M__16
+    # From generated FSM__SIMULATION: DFSM machine named M__5__4
+    return FSM_SIM.default__.M__5__4
 
 
 def get_ndfsm_machine() -> Any:

@@ -112,7 +112,7 @@ class default__:
         return accepted
 
     @staticmethod
-    def delta__16(k, c):
+    def delta__5__4(k, c):
         if ((k) == (default__.q0)) and ((c) == (_dafny.CodePoint('0'))):
             return default__.q0
         elif ((k) == (default__.q0)) and ((c) == (_dafny.CodePoint('1'))):
@@ -126,10 +126,10 @@ class default__:
     def Main(noArgsParameter__):
         d_0_accepted_: bool
         out0_: bool
-        out0_ = default__.dfsmsimulate(default__.M__16, _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "1001")))
+        out0_ = default__.dfsmsimulate(default__.M__5__4, _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "1001")))
         d_0_accepted_ = out0_
         out1_: bool
-        out1_ = default__.dfsmsimulate(default__.M__16, _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "10011")))
+        out1_ = default__.dfsmsimulate(default__.M__5__4, _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "10011")))
         d_0_accepted_ = out1_
         out2_: bool
         out2_ = default__.ndfsmsimulate(default__.M__59, _dafny.SeqWithoutIsStrInference(map(_dafny.CodePoint, "")))
@@ -145,26 +145,26 @@ class default__:
         d_0_accepted_ = out5_
 
     @_dafny.classproperty
-    def K__16(instance):
-        return _dafny.Set({5, 8})
+    def K__5__4(instance):
+        return _dafny.Set({0, 1})
     @_dafny.classproperty
-    def Sigma__16(instance):
+    def Sigma__5__4(instance):
         return _dafny.Set({_dafny.CodePoint('0'), _dafny.CodePoint('1')})
     @_dafny.classproperty
     def q0(instance):
-        return 5
+        return 0
     @_dafny.classproperty
     def q1(instance):
-        return 8
+        return 1
     @_dafny.classproperty
-    def s__16(instance):
+    def s__5__4(instance):
         return default__.q0
     @_dafny.classproperty
-    def A__16(instance):
+    def A__5__4(instance):
         return _dafny.Set({default__.q1})
     @_dafny.classproperty
-    def M__16(instance):
-        return (default__.K__16, default__.Sigma__16, default__.delta__16, default__.s__16, default__.A__16)
+    def M__5__4(instance):
+        return (default__.K__5__4, default__.Sigma__5__4, default__.delta__5__4, default__.s__5__4, default__.A__5__4)
     @_dafny.classproperty
     def K__59(instance):
         return _dafny.Set({0, 1, 2, 3, 4, 5, 6})

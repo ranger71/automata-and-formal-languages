@@ -166,7 +166,7 @@ module PDA_Simulation {
 		}
 	}
 
-	method {:verify false} Main'()
+	method {:verify false} Main()
 		decreases *
 	{
 		assert ValidPDA(M_AnBn) && ValidString("", set c | c in PDA_Sigma(M_AnBn));

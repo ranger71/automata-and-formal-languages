@@ -87,21 +87,21 @@ module FSM_SIMULATION {
 		}
 	}
 
-	const q0: State := 5
-	const q1: State := 8
-	const K_16 := {5,8}
-	const Sigma_16 := {'0', '1'}
-	function delta_16(k: State, c: Symbol): State
-		requires k in K_16 && c in Sigma_16
+	const q0: State := 0
+	const q1: State := 1
+	const K_5_4 := {0,1}
+	const Sigma_5_4 := {'0', '1'}
+	function delta_5_4(k: State, c: Symbol): State
+		requires k in K_5_4 && c in Sigma_5_4
 	{
 		if k == q0 && c == '0' then q0
 		else if k == q0 && c == '1' then q1
 		else if k == q1 && c == '0' then q1
 		else assert k == q1 && c == '1'; q0
 	}
-	const s_16 := q0
-	const A_16 := {q1}
-	const M_16 := (K_16, Sigma_16, delta_16, s_16, A_16)
+	const s_5_4 := q0
+	const A_5_4 := {q1}
+	const M_5_4 := (K_5_4, Sigma_5_4, delta_5_4, s_5_4, A_5_4)
 
 	const K_59: set<State> := {0, 1, 2, 3, 4, 5, 6}
 	const sigma_59: set<Symbol> := {'a', 'b'}
@@ -119,8 +119,8 @@ module FSM_SIMULATION {
 
 	method Main() {
 		// some examples "running" a DFSM and an NDFSM:
-		var accepted := dfsmsimulate(M_16, "1001");
-		accepted := dfsmsimulate(M_16, "10011");
+		var accepted := dfsmsimulate(M_5_4, "1001");
+		accepted := dfsmsimulate(M_5_4, "10011");
 		accepted := ndfsmsimulate(M_59, "") by {
 			assume ValidNDFSM(M_59);
 			assert ValidString("", ND_Sigma(M_59));

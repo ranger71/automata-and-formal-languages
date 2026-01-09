@@ -49,4 +49,4 @@ streamlit run app.py
 - Edge labels are best-effort from Dafny `CodePoint`; blank labels can occur but do not affect stepping.
 
 ## Customize
-- Machines are imported from the generated `FSM__SIMULATION.py` (`M__16` DFSM, `M__59` NDFSM). Update those in Dafny and re-run `dafny build` to refresh.
+- Machines are imported from the generated `FSM__SIMULATION.py` (`M__5__4` DFSM, `M__59` NDFSM). Update those in Dafny and re-run `dafny build` to refresh.

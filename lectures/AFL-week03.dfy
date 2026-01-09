@@ -81,65 +81,65 @@ module Lecture03 {
 	// Slide 12: regular language definition
 	type RegularLanguage = lang: Language | exists M: DFSM :: L(M) == lang witness *
 
-	// Slide 16 - a finite state machine that accepts all binary numbers having "odd parity": with an odd number of occurrences of the digit '1'
-	ghost const L_16 := iset w | ValidString(w, Alphabet_0_1) && Count('1', w) % 2 == 1
-	const q0: State := 5 // the actual number for each state does not really matter, it's just an identifier
-	const q1: State := 8
-	const K_16 := {5,8}
-	const Sigma_16 := {'0', '1'}
-	function delta_16(k: State, c: Symbol): State
-		requires k in K_16 && c in Sigma_16
+	// Example 5.4 in the textbook - a finite state machine that accepts all binary numbers having "odd parity": with an odd number of occurrences of the digit '1'
+	ghost const L_5_4 := iset w | ValidString(w, Alphabet_0_1) && Count('1', w) % 2 == 1
+	const q0: State := 0 // the actual number for each state does not really matter, it's just an identifier
+	const q1: State := 1
+	const K_5_4 := {0,1}
+	const Sigma_5_4 := {'0', '1'}
+	function delta_5_4(k: State, c: Symbol): State
+		requires k in K_5_4 && c in Sigma_5_4
 	{
 		if k == q0 && c == '0' then q0
 		else if k == q0 && c == '1' then q1
 		else if k == q1 && c == '0' then q1
 		else assert k == q1 && c == '1'; q0
 	}
-	const s_16 := q0
-	const A_16 := {q1}
-	const M_16 := (K_16, Sigma_16, delta_16, s_16, A_16)
+	const s_5_4 := q0
+	const A_5_4 := {q1}
+	const M_5_4 := (K_5_4, Sigma_5_4, delta_5_4, s_5_4, A_5_4)
 	
-	lemma Lemma_16()
-		ensures L(M_16) == L_16
+	lemma Lemma_5_4()
+		ensures L(M_5_4) == L_5_4
 	{
-		forall w | ValidString(w, Alphabet_0_1) ensures w in L_16 <==> w in L(M_16) {
+		forall w | ValidString(w, Alphabet_0_1) ensures w in L_5_4 <==> w in L(M_5_4) {
 			if |w| == 0 {
-				assert w !in L_16 by { assert Count('1', w) == 0; }
-				assert w !in L(M_16) by { assert Yield_Full_From(w, q0, M_16) == q0 && q0 !in A(M_16);}
+				assert w !in L_5_4 by { assert Count('1', w) == 0; }
+				assert w !in L(M_5_4) by { assert Yield_Full_From(w, q0, M_5_4) == q0 && q0 !in A(M_5_4);}
 			}
 			else {
 				assert |w| > 0;
 				var c := w[0];
 				var next_w := w[1..];
-				assert ValidString(next_w, Sigma(M_16));
-				var next_state := Delta(M_16)(q0, c);
+				assert ValidString(next_w, Sigma(M_5_4));
+				var next_state := Delta(M_5_4)(q0, c);
 				calc {
-					w in L(M_16);
+					w in L(M_5_4);
 				==
-					ValidString(w, Sigma(M_16)) && AcceptedByDFSM(w, M_16);
+					ValidString(w, Sigma(M_5_4)) && AcceptedByDFSM(w, M_5_4);
 				==
-					Yield_Full(w, M_16) in A(M_16);
+					Yield_Full(w, M_5_4) in A(M_5_4);
 				==
-					Yield_Full_From(w, s(M_16), M_16) in A(M_16);
+					Yield_Full_From(w, s(M_5_4), M_5_4) in A(M_5_4);
 				==
-					Yield_Full_From(w, q0, M_16) in A(M_16);
-				== { Lemma_16_q0(w); }
+					Yield_Full_From(w, q0, M_5_4) in A(M_5_4);
+				== { Lemma_5_4_q0(w); }
 					Count('1', w) % 2 == 1;
 				==
-					w in L_16;
+					w in L_5_4;
 				}
 			}
 		}
 	}
 
-	lemma Lemma_16_q0(w: String)
+	lemma Lemma_5_4_q0(w: String)
 		requires ValidString(w, Alphabet_0_1)
-		ensures Count('1', w) % 2 == 1 <==> Yield_Full_From(w, q0, M_16) in A(M_16)
+		ensures Count('1', w) % 2 == 1 <==> Yield_Full_From(w, q0, M_5_4) in A(M_5_4)
 		decreases |w|
 	{
 		if |w| == 0 {
 			assert Count('1', w) % 2 == 0;
-			assert Yield_Full_From(w, q0, M_16) == q0 && q0 !in A(M_16);
+			assert Yield_Full_From(w, q0, M_5_4) == q0 && q0 !in A(M_5_4);
 		}
 		else {
 			assert ValidString(w, Alphabet_0_1);
@@ -147,13 +147,13 @@ module Lecture03 {
 			var c := w[0];
 			var next_w := w[1..];
 			assert ValidString(next_w, Alphabet_0_1);
-			var next_state := Delta(M_16)(q0, c);
+			var next_state := Delta(M_5_4)(q0, c);
 			if w[0] == '0' {
 				calc {
-					Yield_Full_From(w, q0, M_16) in A(M_16);
+					Yield_Full_From(w, q0, M_5_4) in A(M_5_4);
 				==
-					Yield_Full_From(next_w, next_state, M_16) in A(M_16);
-				== { assert next_state == delta_16(q0, '0') == q0; Lemma_16_q0(next_w); }
+					Yield_Full_From(next_w, next_state, M_5_4) in A(M_5_4);
+				== { assert next_state == delta_5_4(q0, '0') == q0; Lemma_5_4_q0(next_w); }
 					Count('1', next_w) % 2 == 1;
 				== { assert w == ['0'] + next_w; }
 					Count('1', w) % 2 == 1;
@@ -161,10 +161,10 @@ module Lecture03 {
 			}
 			else {
 				calc {
-					Yield_Full_From(w, q0, M_16) in A(M_16);
+					Yield_Full_From(w, q0, M_5_4) in A(M_5_4);
 				==
-					Yield_Full_From(next_w, next_state, M_16) in A(M_16);
-				== { assert next_state == delta_16(q0, '1') == q1; Lemma_16_q1(next_w); }
+					Yield_Full_From(next_w, next_state, M_5_4) in A(M_5_4);
+				== { assert next_state == delta_5_4(q0, '1') == q1; Lemma_5_4_q1(next_w); }
 					Count('1', next_w) % 2 == 0;
 				== { assert w == ['1'] + next_w; }
 					Count('1', w) % 2 == 1;
@@ -173,14 +173,14 @@ module Lecture03 {
 		}
 	}
 
-	lemma Lemma_16_q1(w: String)
+	lemma Lemma_5_4_q1(w: String)
 		requires ValidString(w, Alphabet_0_1)
- 		ensures Count('1', w) % 2 == 0 <==> Yield_Full_From(w, q1, M_16) in A(M_16)
+ 		ensures Count('1', w) % 2 == 0 <==> Yield_Full_From(w, q1, M_5_4) in A(M_5_4)
 		decreases |w|
 	{
 		if |w| == 0 {
 			assert Count('1', w) % 2 == 0;
-			assert Yield_Full_From(w, q1, M_16) == q1 && q1 in A(M_16);
+			assert Yield_Full_From(w, q1, M_5_4) == q1 && q1 in A(M_5_4);
 		}
 		else {
 			assert ValidString(w, Alphabet_0_1);
@@ -188,13 +188,13 @@ module Lecture03 {
 			var c := w[0];
 			var next_w := w[1..];
 			assert ValidString(next_w, Alphabet_0_1);
-			var next_state := Delta(M_16)(q1, c);
+			var next_state := Delta(M_5_4)(q1, c);
 			if w[0] == '0' {
 				calc {
-					Yield_Full_From(w, q1, M_16) in A(M_16);
+					Yield_Full_From(w, q1, M_5_4) in A(M_5_4);
 				==
-					Yield_Full_From(next_w, next_state, M_16) in A(M_16);
-				== { assert next_state == delta_16(q1, '0') == q1; Lemma_16_q1(next_w); }
+					Yield_Full_From(next_w, next_state, M_5_4) in A(M_5_4);
+				== { assert next_state == delta_5_4(q1, '0') == q1; Lemma_5_4_q1(next_w); }
 					Count('1', next_w) % 2 == 0;
 				== { assert w == ['0'] + next_w; }
 					Count('1', w) % 2 == 0;
@@ -202,10 +202,10 @@ module Lecture03 {
 			}
 			else {
 				calc {
-					Yield_Full_From(w, q1, M_16) in A(M_16);
+					Yield_Full_From(w, q1, M_5_4) in A(M_5_4);
 				==
-					Yield_Full_From(next_w, next_state, M_16) in A(M_16);
-				== { assert next_state == delta_16(q1, '1') == q0; Lemma_16_q0(next_w); }
+					Yield_Full_From(next_w, next_state, M_5_4) in A(M_5_4);
+				== { assert next_state == delta_5_4(q1, '1') == q0; Lemma_5_4_q0(next_w); }
 					Count('1', next_w) % 2 == 1;
 				== { assert w == ['1'] + next_w; }
 					Count('1', w) % 2 == 0;
@@ -214,51 +214,51 @@ module Lecture03 {
 		}
 	}
 
-	lemma Lemma_16_with_short_proof()
-		ensures L(M_16) == L_16
+	lemma Lemma_5_4_with_short_proof()
+		ensures L(M_5_4) == L_5_4
 	{
-		forall w | ValidString(w, Alphabet_0_1) ensures w in L_16 <==> w in L(M_16) {
-			Lemma_16_q0_with_short_proof(w);
+		forall w | ValidString(w, Alphabet_0_1) ensures w in L_5_4 <==> w in L(M_5_4) {
+			Lemma_5_4_q0_with_short_proof(w);
 		}
 	}
 
-	lemma Lemma_16_q0_with_short_proof(w: String)
+	lemma Lemma_5_4_q0_with_short_proof(w: String)
 		requires ValidString(w, Alphabet_0_1)
-		ensures Count('1', w) % 2 == 1 <==> Yield_Full_From(w, q0, M_16) in A(M_16)
+		ensures Count('1', w) % 2 == 1 <==> Yield_Full_From(w, q0, M_5_4) in A(M_5_4)
 		decreases |w|
 	{
 		if |w| > 0 {
 			assert ValidString(w, Alphabet_0_1);
 			var c := w[0];
 			var next_w := w[1..];
-			Lemma_16_q0_with_short_proof(next_w);
-			var next_state := Delta(M_16)(q0, c);
+			Lemma_5_4_q0_with_short_proof(next_w);
+			var next_state := Delta(M_5_4)(q0, c);
 			if w[0] == '0' {
-				Lemma_16_q0_with_short_proof(next_w);
+				Lemma_5_4_q0_with_short_proof(next_w);
 				assert w == ['0'] + next_w;
 			}
 			else {
-				Lemma_16_q1_with_short_proof(next_w);
+				Lemma_5_4_q1_with_short_proof(next_w);
 				assert w == ['1'] + next_w;
 			}
 		}
 	}
 
-	lemma Lemma_16_q1_with_short_proof(w: String)
+	lemma Lemma_5_4_q1_with_short_proof(w: String)
 		requires ValidString(w, Alphabet_0_1)
- 		ensures Count('1', w) % 2 == 0 <==> Yield_Full_From(w, q1, M_16) in A(M_16)
+ 		ensures Count('1', w) % 2 == 0 <==> Yield_Full_From(w, q1, M_5_4) in A(M_5_4)
 		decreases |w|
 	{
 		if |w| > 0 {
 			var c := w[0];
 			var next_w := w[1..];
 			if w[0] == '0' {
-				Lemma_16_q1_with_short_proof(next_w);
+				Lemma_5_4_q1_with_short_proof(next_w);
 				assert w == ['0'] + next_w;
 			}
 			else {
-				Lemma_16_q0_with_short_proof(next_w);
-				assert w[0] == '1' by { assert w[0] in Sigma(M_16) && w[0] != '0'; }
+				Lemma_5_4_q0_with_short_proof(next_w);
+				assert w[0] == '1' by { assert w[0] in Sigma(M_5_4) && w[0] != '0'; }
 				assert w == ['1'] + next_w;
 			}
 		}

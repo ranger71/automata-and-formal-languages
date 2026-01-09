@@ -413,8 +413,8 @@ module FSM_SIMULATION {
 	}
 
 	method Main() {
-		var accepted := dfsmsimulate(M_16, "1001");
-		accepted := dfsmsimulate(M_16, "10011");
+		var accepted := dfsmsimulate(M_5_4, "1001");
+		accepted := dfsmsimulate(M_5_4, "10011");
 		accepted := ndfsmsimulate(M_59, "");
 		accepted := ndfsmsimulate(M_59, "aba");
 		accepted := ndfsmsimulate(M_59, "baa");
