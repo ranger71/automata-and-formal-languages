@@ -85,7 +85,7 @@ module Lecture03 {
 	ghost const L_5_4 := iset w | ValidString(w, Alphabet_0_1) && Count('1', w) % 2 == 1
 	const q0: State := 0 // the actual number for each state does not really matter, it's just an identifier
 	const q1: State := 1
-	const K_5_4 := {0,1}
+	const K_5_4 := {q0, q1}
 	const Sigma_5_4 := {'0', '1'}
 	function delta_5_4(k: State, c: Symbol): State
 		requires k in K_5_4 && c in Sigma_5_4

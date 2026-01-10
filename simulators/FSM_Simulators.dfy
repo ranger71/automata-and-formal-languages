@@ -89,7 +89,7 @@ module FSM_SIMULATION {
 
 	const q0: State := 0
 	const q1: State := 1
-	const K_5_4 := {0,1}
+	const K_5_4 := {q0, q1}
 	const Sigma_5_4 := {'0', '1'}
 	function delta_5_4(k: State, c: Symbol): State
 		requires k in K_5_4 && c in Sigma_5_4
