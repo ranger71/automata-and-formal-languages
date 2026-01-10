@@ -118,11 +118,12 @@ module FSM_SIMULATION {
 	const M_59: NDFSM := (K_59, sigma_59, DELTA_59, s_59, A_59)
 
 	method Main() {
-		// some examples "running" a DFSM and an NDFSM:
+		// "running" a DFSM:
 		var accepted := dfsmsimulate(M_5_4, "1001");
 		accepted := dfsmsimulate(M_5_4, "10011");
+		// "running" an NDFSM:
 		accepted := ndfsmsimulate(M_59, "") by {
-			assume ValidNDFSM(M_59);
+			assume {:axiom} ValidNDFSM(M_59);
 			assert ValidString("", ND_Sigma(M_59));
 		}
 		accepted := ndfsmsimulate(M_59, "aba");

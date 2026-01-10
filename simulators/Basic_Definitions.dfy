@@ -232,9 +232,8 @@ module FormalLanguages { // from lectures 1 and 2
 		LanguageConcat(L, LanguageStar(L))
 	}
 
-	lemma {:verify false} Language_Plus_Star_and_Epsilon(L: Language)
+	lemma {:axiom} Language_Plus_Star_and_Epsilon(L: Language)
 		ensures (LanguagePlus(L) == LanguageStar(L) - iset{EPSILON}) <==> (EPSILON !in L)
-	{}
 	
 	// Slide 55
 	ghost function LanguageReverse(L: Language): Language {
